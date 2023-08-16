@@ -1,10 +1,10 @@
 import React from "react";
 
-const TopButtons = () => {
+const TopButtons = ({ setQuery }) => {
   const cities = [
     {
       id: 1,
-      title: "London",
+      title: "Vienna",
     },
     {
       id: 2,
@@ -27,7 +27,11 @@ const TopButtons = () => {
   return (
     <div className=" flex item-center justify-around my-6">
       {cities.map(({ id, title }) => (
-        <button key={id} className="text-white text-lg font-medium ">
+        <button
+          key={id}
+          className="text-white text-lg font-medium hover:scale-125 transition ease-out "
+          onClick={() => setQuery({ q: title })}
+        >
           {title}
         </button>
       ))}
