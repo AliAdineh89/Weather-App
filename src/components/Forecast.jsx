@@ -1,5 +1,5 @@
 import React from "react";
-import { iconUrlFromCode } from "../services/weatherService";
+import { iconUrlFromCode } from "../config/environment";
 
 const Forecast = ({ title, items }) => {
   return (

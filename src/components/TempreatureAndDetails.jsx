@@ -8,7 +8,8 @@ import {
   UilSun,
   UilSunset,
 } from "@iconscout/react-unicons";
-import { formatToLocalTime, iconUrlFromCode } from "../services/weatherService";
+import { formatToLocalTime } from "../services/weatherService";
+import { iconUrlFromCode } from "../config/environment";
 
 const TempreatureAndDetails = ({
   weather: {
