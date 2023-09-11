@@ -14,10 +14,12 @@ const useAsync = (asyncFunction, immediate = true) => {
         .then((response) => {
           setValue(response);
           setStatus("success");
+          return response;
         })
         .catch((error) => {
           setError(error);
           setStatus("error");
+          return error;
         });
     },
     [asyncFunction]

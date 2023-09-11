@@ -12,18 +12,54 @@ const httpClient = (conf) => {
   });
 };
 
-const getWeatherData = async (input) => {
-  const url = new URL(`${BASE_URL}/${input.infoType}`);
-  url.search = new URLSearchParams({
-    q: input.q,
-    units: input.units,
+
+const getLocationData = async ({ lat, lon, units = 'imperial' }) => {
+  const onecallSearch = new URLSearchParams({
+    units,
+    appid: WEATHER_API_KEY,
+    lat,
+    lon,
+    exclude: 'current,minutely,alerts'
+  });
+
+  const oncallLocationRes = await httpClient({
+    url: `${BASE_URL}/onecall?${onecallSearch.toString()}`,
+    method: "GET",
+  });
+
+  return oncallLocationRes
+}
+
+
+const getWeatherData = async ({ q, units = 'imperial' }) => {
+  const weatherSearch = new URLSearchParams({
+    q,
+    units,
     appid: WEATHER_API_KEY,
   });
 
-  return httpClient({
-    url: url.href,
+  const weatherLocationRes = await httpClient({
+    url: `${BASE_URL}/weather?${weatherSearch.toString()}`,
     method: "GET",
   });
-};
 
-export { getWeatherData };
+  const oncallLocationRes = await getLocationData({
+    units,
+    lat: weatherLocationRes.coord.lat,
+    lon: weatherLocationRes.coord.lon,
+  });
+
+  console.log('==>>', {
+    weatherLocationRes,
+    oncallLocationRes
+  })
+
+  return {
+    weatherLocationRes,
+    oncallLocationRes
+  }
+}
+
+
+
+export { getWeatherData, getLocationData };
